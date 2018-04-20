@@ -41,9 +41,9 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
      //Exit program
      if (j.waitForCompletion(true)) {
-       Sysetm.exit(0);
+       System.exit(0);
      }else{
-       Sysetm.exit(1);
+       System.exit(1);
      }
    }
  }

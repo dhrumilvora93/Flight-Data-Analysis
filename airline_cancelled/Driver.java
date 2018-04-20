@@ -1,4 +1,4 @@
-package airline_c;
+package airline_cancelled;
 
 import java.io.IOException;
 
@@ -43,9 +43,9 @@ public class Driver {
 
     //Exit program
     if (j.waitForCompletion(true)) {
-      Sysetm.exit(0);
+      System.exit(0);
     }else{
-      Sysetm.exit(1);
+      System.exit(1);
     }
   }
 }
