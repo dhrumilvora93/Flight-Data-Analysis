@@ -1,4 +1,4 @@
-package airline;
+package arrdelay;
 
 import java.io.IOException;
 
@@ -7,10 +7,13 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class ReadingMapper extends Mapper<LongWritable, Text,Text,IntWritable>{
 
-    public void map(LongWritable Key,Text value, Context context) throws IOException, InterruptedException{
-      /*
+/**
+ * @author Dhrumil Vora
+ *
+ */
+public class delayMapper extends Mapper<LongWritable,Text,Text,IntWritable>{
+  /*
 		 * Format in CSV
 			Year	0
 			Month	1
@@ -41,18 +44,15 @@ public class ReadingMapper extends Mapper<LongWritable, Text,Text,IntWritable>{
 			NASDelay	26
 			SecurityDelay	27
 			LateAircraftDelay	28
-		 * */
-      String[] file = value.toString().split(",");
-      Integer year = Integer.parseInt(file[0]);
-      Integer cancelled = Integer.parseInt(file[21])
 
-      //check if cancelled
-      if (cancelled == 1) {
-        // writing the <key,value> as <CancellationCode,Year>
-        context.write(
-              new Text(file[22].toString()),
-              new IntWritable(year)
-        );
-      }
-    }
+		 * */
+  public void map(LongWritable key, Text value, Context c) throws IOException,InterruptedException{
+    String[] file = value.toString().split(",");
+    if(!"NA".equalsIgnoreCase(file[14])) {
+      int arrDelayInMinutes = Integer.parseInt(file[14]);
+      String airlines = file[8];
+
+      // Intermediate <K,V> as <airlines,arrDelayInMinutes>
+      c.write(new Text(airlines),new IntWritable(arrDelayInMinutes));
+  }
 }
