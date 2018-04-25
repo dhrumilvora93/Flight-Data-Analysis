@@ -1,5 +1,3 @@
-package airline_cancelled;
-
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
@@ -34,12 +32,12 @@ public class Driver {
     j.setMapOutputValueClass(IntWritable.class);
 
     // Input Path
-    Path input = new Path(args[1]);
+    Path input = new Path(args[0]);
     FileInputFormat.addInputPath(j,input);
 
     // output Path
-    Path output = new Path(args[2]);
-    FileOutputFormat.addOutputPath(j,output);
+    Path output = new Path(args[1]);
+    FileOutputFormat.setOutputPath(j,output);
 
     //Exit program
     if (j.waitForCompletion(true)) {

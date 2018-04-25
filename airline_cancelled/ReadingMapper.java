@@ -1,5 +1,3 @@
-package airline_cancelled;
-
 import java.io.IOException;
 
 import org.apache.hadoop.io.IntWritable;
@@ -46,9 +44,12 @@ public class ReadingMapper extends Mapper<LongWritable, Text,Text,IntWritable>{
 			SecurityDelay	27
 			LateAircraftDelay	28
 		 * */
+      if (Key.get!=0) {
+
+
       String[] file = value.toString().split(",");
       Integer year = Integer.parseInt(file[0]);
-      Integer cancelled = Integer.parseInt(file[21])
+      Integer cancelled = Integer.parseInt(file[21]);
 
       //check if cancelled
       if (cancelled == 1) {
@@ -57,6 +58,8 @@ public class ReadingMapper extends Mapper<LongWritable, Text,Text,IntWritable>{
               new Text(file[22].toString()),
               new IntWritable(year)
         );
+      }else{
+        return;
       }
     }
 }

@@ -1,5 +1,3 @@
-package airline_cancelled;
-
 import java.io.IOException;
 import java.util.Iterator;
 
@@ -15,7 +13,7 @@ public class WritingReducer extends Reducer<Text,IntWritable,Text,Text>{
   public void reduce(Text CancellationCode , Iterable<IntWritable> year, Context c) throws IOException,InterruptedException{
     int total = 0;
     // made year as Iterable object
-    Iterable<IntWritable> iter = year.iterator();
+    Iterator<IntWritable> iter = year.iterator();
 
     while(iter.hasNext()){
       total++;

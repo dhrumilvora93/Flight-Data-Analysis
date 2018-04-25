@@ -1,5 +1,3 @@
-package airline_delay;
-
 import java.io.IOException;
 import java.util.Iterator;
 
@@ -12,14 +10,14 @@ import org.apache.hadoop.mapreduce.Reducer;
  *
  */
  public class delayReducer extends Reducer<Text, IntWritable, Text,Text>{
-   public void reduce(Text airlines, IntWritable arrDelayInMinutes, Context c) throws IOException,InterruptedException{
+   public void reduce(Text airlines, Iterable<IntWritable> arrDelayInMinutes, Context c) throws IOException,InterruptedException{
 
     /* negative value indicates early arrival and positive value indicates late arrival
  		* for airline to be called on schedule == 0 and negative values are considered on schedule
  		* use float as numbers will get really BIG!
     */
      float total = 0;
-     float onSchedule = 0
+     float onSchedule = 0;
 
      Iterator<IntWritable> iter = arrDelayInMinutes.iterator();
 

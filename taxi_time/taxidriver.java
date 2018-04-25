@@ -11,23 +11,23 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * @author Dhrumil Vora
  *
  */
- public class Driver {
+ public class taxidriver {
 
    public static void main(String[] args) throws IOException,ClassNotFoundException, InterruptedException {
      // Setup Job
      @SuppressWarnings("deprecation")
-     Job j = new Job(new Configuration(),"Airline Delay");
+     Job j = new Job(new Configuration(),"Avg Taxi Time");
 
-     j.setJarByClass(Driver.class);
+     j.setJarByClass(taxidriver.class);
 
-     j.setMapperClass(delayMapper.class);
+     j.setMapperClass(avgTaxiTimeMapper.class);
 
-     j.setReducerClass(delayReducer.class);
+     j.setReducerClass(avgTaxiTimeReducer.class);
 
      // Mentioned as final output by reducer dosent match with the output of the mapper
      j.setMapOutputKeyClass(Text.class);
 
-     j.setMapOutputValueClass(IntWritable.class);
+     j.setMapOutputValueClass(Text.class);
 
      // Input Path
      Path input = new Path(args[0]);
