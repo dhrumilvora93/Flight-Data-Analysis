@@ -35,8 +35,8 @@ public class avgTaxiTimeReducer extends Reducer<Text,Text,Text,Text>{
     }else{
       taxi_avg= 0;
     }
-    
-    c.write(airports,new Text(taxi_avg+""));
+
+    c.write(airports,new Text(""+taxi_avg));
 
   }
 }

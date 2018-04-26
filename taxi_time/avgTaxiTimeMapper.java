@@ -51,8 +51,8 @@ import org.apache.hadoop.mapreduce.Mapper;
        String TaxiOut = file[20];
        String dest = file[17];
        String TaxiIn=file[19];
-       c.write(new Text(dest+"\tIN\t"),new Text(TaxiIn+""));
-       c.write(new Text(origin + "\tOUT\t"),new Text(TaxiOut+""));
+       c.write(new Text(dest+"\tIN"),new Text(TaxiIn+""));
+       c.write(new Text(origin+"\tOUT"),new Text(TaxiOut+""));
 
       }else{
         return;

@@ -1,0 +1,73 @@
+<workflow-app name="Project" xmlns="uri:oozie:workflow:0.5">
+    <start to="fork-6ecc"/>
+    <kill name="Kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <action name="java-e1a8">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>taxidriver</main-class>
+            <arg>s3://dhv-93/input/2008.csv</arg>
+            <arg>/user/admin/taxi/</arg>
+        </java>
+        <ok to="pig-88ac"/>
+        <error to="Kill"/>
+    </action>
+    <action name="java-6ee4">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>Driver</main-class>
+            <arg>s3://dhv-93/input/2008.csv</arg>
+            <arg>/user/admin/cancel/</arg>
+        </java>
+        <ok to="pig-2a53"/>
+        <error to="Kill"/>
+    </action>
+    <fork name="fork-6ecc">
+        <path start="java-e1a8" />
+        <path start="java-6ee4" />
+        <path start="java-8a84" />
+    </fork>
+    <join name="join-8673" to="End"/>
+    <action name="java-8a84">
+        <java>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <main-class>Driver</main-class>
+            <arg>s3://dhv-93/input/2008.csv</arg>
+            <arg>/user/admin/delay/</arg>
+        </java>
+        <ok to="pig-f649"/>
+        <error to="Kill"/>
+    </action>
+    <action name="pig-2a53">
+        <pig>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <script>${wf:appPath()}/pig-2a53.pig</script>
+        </pig>
+        <ok to="join-8673"/>
+        <error to="Kill"/>
+    </action>
+    <action name="pig-88ac">
+        <pig>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <script>${wf:appPath()}/pig-88ac.pig</script>
+        </pig>
+        <ok to="join-8673"/>
+        <error to="Kill"/>
+    </action>
+    <action name="pig-f649">
+        <pig>
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <script>${wf:appPath()}/pig-f649.pig</script>
+        </pig>
+        <ok to="join-8673"/>
+        <error to="Kill"/>
+    </action>
+    <end name="End"/>
+</workflow-app>
