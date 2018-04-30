@@ -1,0 +1,29 @@
+=========== DOWNLOAD DATA ===========
+curl -O http://stat-computing.org/dataexpo/2009/[1987-2008].csv.bz2
+bzip2 -d <filename>
+
+===========	QUESTION 1 ===========
+** Adding JAR to HDFS 
+hdfs dfs -copyFromLocal ./airline_delay.jar 
+/user/admin/airline_delay.jar
+
+** Get Map Reduce Output from HDFS 
+hadoop fs -getmerge 
+/user/admin/delay/ ./result.txt
+
+===========	QUESTION 2 ===========
+** Adding JAR to HDFS 
+hdfs dfs -copyFromLocal ./taxitime.jar 
+/user/admin/taxitime.jar
+
+** Get Map Reduce Output from HDFS 
+hadoop fs -getmerge /user/admin/taxi/ ./result.txt
+
+===========	QUESTION 3 ===========
+
+** Adding JAR to HDFS 
+hdfs dfs -copyFromLocal ./airline_cancelled.jar 
+/user/admin/airline_cancelled.jar
+
+** Get Map Reduce Output from HDFS 
+hadoop fs -getmerge /user/admin/cancelled/ ./result.txt
